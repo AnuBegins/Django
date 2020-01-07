@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang = "en">
+  <head>
+    <title>Ninja's Gold (Django)</title>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+  </head>
+  <body>
+    <div class = "container">
+        <div>
+            <div class = "pt-md-5 pb-md-4 mx-auto text-center">
+                <h1 class = "display-5">Ninja's gold count: <span class="text-warning">{{ request.session.count }}</span> </h1>
+                <p class = "lead">This greedy ninja raids different places to either scavenge or wager for gold. </p>
+            </div>
+            <div class = "card-deck mb-3 text-center">
+                <!-- ****** Creating a bootstrap card component for each location -->
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Grow-Op</h4>
+                    </div>
+                    <p>+ [10,20] gold coins </p>
+                    <form action="/process_money" method="POST" class="form-control">
+                        {% csrf_token %}
+                        <input type="hidden" name="getCoin" value='Grow-Op'>
+                        <input type="submit" class="btn btn-sm btn-secondary" value="Find Gold!" >
+                    </form>
+                </div>
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Bordello</h4>
+                    </div>
+                    <p>+ [5,10] gold coins </p>
+                    <form action="/process_money" method="POST" class="form-control">
+                        {% csrf_token %}
+                        <input type="hidden" name="getCoin" value='Bordello'>
+                        <input type="submit" class="btn btn-sm btn-secondary" value="Find Gold!" >
+                    </form>
+                </div>
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Dojo</h4>
+                    </div>
+                    <p>+ [2,5] gold coins </p>
+                    <form action="/process_money" method="POST" class="form-control">
+                        {% csrf_token %}
+                        <input type="hidden" name="getCoin" value='Dojo'>
+                        <input type="submit" class="btn btn-sm btn-secondary" value="Find Gold!" >
+                    </form>
+                </div>
+                <div class="card mb-4 box-shadow">
+                    <div class="card-header">
+                        <h4 class="my-0 font-weight-normal">Ca$ino</h4>
+                    </div>
+                    <p>+/- [0,50] gold coins </p>
+                    <form action="/process_money" method="POST" class="form-control">
+                        {% csrf_token %}
+                        <input type="hidden" name="getCoin" value='Ca$ino'>
+                        <input type="submit" class="btn btn-sm btn-secondary" value="Find Gold!" >
+                    </form>
+                </div>
+
+            </div>
+
+            <h3>Activity:</h3>
+            <div class = "text-center border border-default">
+                {% for action in request.session.actions %}
+                    <p><span class={{ request.session.color }}>{{ action }}</span> </p>
+                {% endfor %}
+            </div>
+            <div class = "form-group">
+                <form action = "/reset" method = "POST">
+                    <p></p>
+                    {% csrf_token %}
+                    <input type = "submit" class = "btn btn-primary" value = "Reset">
+                </form>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>
